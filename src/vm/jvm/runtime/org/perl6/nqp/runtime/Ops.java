@@ -373,13 +373,6 @@ public final class Ops {
         return obj;
     }
 
-    public static SixModelObject closesocket(SixModelObject obj, ThreadContext tc) {
-        IOHandleInstance h = (IOHandleInstance)obj;
-        NotQuiteSocket sock = (NotQuiteSocket)h.handle;
-        sock.close(tc);
-        return obj;
-    }
-
     public static SixModelObject setencoding(SixModelObject obj, String encoding, ThreadContext tc) {
         if (obj instanceof IOHandleInstance) {
             IOHandleInstance h = (IOHandleInstance)obj;
