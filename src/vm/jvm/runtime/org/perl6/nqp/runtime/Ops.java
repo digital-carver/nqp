@@ -38,6 +38,7 @@ import java.util.concurrent.TimeUnit;
 import org.perl6.nqp.io.AsyncFileHandle;
 import org.perl6.nqp.io.FileHandle;
 import org.perl6.nqp.io.IIOAsyncReadable;
+import org.perl6.nqp.io.NotQuiteSocket;
 import org.perl6.nqp.io.IIOClosable;
 import org.perl6.nqp.io.IIOEncodable;
 import org.perl6.nqp.io.IIOInteractive;
@@ -358,6 +359,27 @@ public final class Ops {
         return h;
     }
     
+    public static SixModelObject socket(ThreadContext tc) {
+        SixModelObject IOType = tc.curFrame.codeRef.staticInfo.compUnit.hllConfig.ioType;
+        IOHandleInstance h = (IOHandleInstance)IOType.st.REPR.allocate(tc, IOType.st);
+        h.handle = new NotQuiteSocket(tc);
+        return h;
+    }
+
+    public static SixModelObject connect(SixModelObject obj, String host, long port, ThreadContext tc) {
+        IOHandleInstance h = (IOHandleInstance)obj;
+        NotQuiteSocket sock = (NotQuiteSocket)h.handle;
+        sock.connect(tc, host, port);
+        return obj;
+    }
+
+    public static SixModelObject closesocket(SixModelObject obj, ThreadContext tc) {
+        IOHandleInstance h = (IOHandleInstance)obj;
+        NotQuiteSocket sock = (NotQuiteSocket)h.handle;
+        sock.close(tc);
+        return obj;
+    }
+
     public static SixModelObject setencoding(SixModelObject obj, String encoding, ThreadContext tc) {
         if (obj instanceof IOHandleInstance) {
             IOHandleInstance h = (IOHandleInstance)obj;

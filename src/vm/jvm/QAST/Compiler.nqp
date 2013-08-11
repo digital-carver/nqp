@@ -1910,6 +1910,10 @@ QAST::OperationsJAST.map_classlib_core_op('link', $TYPE_OPS, 'link', [$RT_STR, $
 QAST::OperationsJAST.map_classlib_core_op('shell', $TYPE_OPS, 'shell', [$RT_STR], $RT_INT);
 QAST::OperationsJAST.map_classlib_core_op('symlink', $TYPE_OPS, 'symlink', [$RT_STR, $RT_STR], $RT_INT);
 
+QAST::OperationsJAST.map_classlib_core_op('socket', $TYPE_OPS, 'socket', [], $RT_OBJ, :tc);
+QAST::OperationsJAST.map_classlib_core_op('connect', $TYPE_OPS, 'connect', [$RT_OBJ, $RT_STR, $RT_INT], $RT_OBJ, :tc);
+QAST::OperationsJAST.map_classlib_core_op('closesocket', $TYPE_OPS, 'closesocket', [$RT_OBJ], $RT_OBJ, :tc);
+
 QAST::OperationsJAST.map_classlib_core_op('opendir', $TYPE_OPS, 'opendir', [$RT_STR], $RT_OBJ, :tc);
 QAST::OperationsJAST.map_classlib_core_op('nextfiledir', $TYPE_OPS, 'nextfiledir', [$RT_OBJ], $RT_STR, :tc);
 QAST::OperationsJAST.map_classlib_core_op('closedir', $TYPE_OPS, 'closedir', [$RT_OBJ], $RT_INT, :tc);
