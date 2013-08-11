@@ -22,10 +22,26 @@ public class NotQuiteSocket implements IIOClosable {
         }
     }
 
-    public void connect(ThreadContext tc, String hostname, long port){
+    public void connect(ThreadContext tc, String hostname, long port) {
         InetSocketAddress addr = new InetSocketAddress(hostname, (int)port);
         try {
             sock.connect(addr);
+        } catch (IOException e) {
+            throw ExceptionHandling.dieInternal(tc, e);
+        }
+    }
+
+    public long read(ThreadContext tc, byte[] buf) {
+        try {
+            return (long)sock.getInputStream().read(buf);
+        } catch (IOException e) {
+            throw ExceptionHandling.dieInternal(tc, e);
+        }
+    }
+
+    public void write(ThreadContext tc, byte[] buf) {
+        try {
+            sock.getOutputStream().write(buf);
         } catch (IOException e) {
             throw ExceptionHandling.dieInternal(tc, e);
         }

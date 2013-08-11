@@ -373,6 +373,34 @@ public final class Ops {
         return obj;
     }
 
+    public static SixModelObject read(SixModelObject obj, SixModelObject buf, long size, ThreadContext tc) {
+        IOHandleInstance h = (IOHandleInstance)obj;
+        NotQuiteSocket sock = (NotQuiteSocket)h.handle;
+
+        if (buf instanceof VMArrayInstance_i8) {
+            VMArrayInstance_i8 arr8 = (VMArrayInstance_i8)buf;
+            arr8.set_elems(tc, size);
+            arr8.elems = (int)sock.read(tc, arr8.slots);
+            arr8.start = 0;
+            return (SixModelObject)arr8;
+        } else {
+            throw ExceptionHandling.dieInternal(tc, "Cannot read() into an object of this type");
+        }
+    }
+
+    public static SixModelObject write(SixModelObject obj, SixModelObject buf, ThreadContext tc) {
+        IOHandleInstance h = (IOHandleInstance)obj;
+        NotQuiteSocket sock = (NotQuiteSocket)h.handle;
+
+        if (buf instanceof VMArrayInstance_i8) {
+            VMArrayInstance_i8 arr8 = (VMArrayInstance_i8)buf;
+            sock.write(tc, arr8.slots);
+            return (SixModelObject)arr8;
+        } else {
+            throw ExceptionHandling.dieInternal(tc, "Cannot read() into an object of this type");
+        }
+    }
+
     public static SixModelObject setencoding(SixModelObject obj, String encoding, ThreadContext tc) {
         if (obj instanceof IOHandleInstance) {
             IOHandleInstance h = (IOHandleInstance)obj;
