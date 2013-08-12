@@ -373,6 +373,29 @@ public final class Ops {
         return obj;
     }
 
+    public static SixModelObject bindsock(SixModelObject obj, String host, long port, ThreadContext tc) {
+        IOHandleInstance h = (IOHandleInstance)obj;
+        NotQuiteSocket sock = (NotQuiteSocket)h.handle;
+        sock.bind(tc, host, port);
+        return obj;
+    }
+
+    public static SixModelObject listen(SixModelObject obj, ThreadContext tc) {
+        IOHandleInstance h = (IOHandleInstance)obj;
+        NotQuiteSocket sock = (NotQuiteSocket)h.handle;
+        sock.listen(tc);
+        return obj;
+    }
+
+    public static SixModelObject accept(SixModelObject obj, ThreadContext tc) {
+        IOHandleInstance h = (IOHandleInstance)obj;
+        NotQuiteSocket sock = (NotQuiteSocket)h.handle;
+        NotQuiteSocket newsock = sock.accept(tc);
+        IOHandleInstance ret = new IOHandleInstance();
+        ret.handle = newsock;
+        return (SixModelObject)ret;
+    }
+
     public static SixModelObject read(SixModelObject obj, SixModelObject buf, long size, ThreadContext tc) {
         IOHandleInstance h = (IOHandleInstance)obj;
         NotQuiteSocket sock = (NotQuiteSocket)h.handle;
