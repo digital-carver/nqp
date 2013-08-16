@@ -424,7 +424,7 @@ public final class Ops {
             sock.write(tc, arr8.slots);
             return (SixModelObject)arr8;
         } else {
-            throw ExceptionHandling.dieInternal(tc, "Cannot read() into an object of this type");
+            throw ExceptionHandling.dieInternal(tc, "Cannot write() from an object of this type");
         }
     }
 
