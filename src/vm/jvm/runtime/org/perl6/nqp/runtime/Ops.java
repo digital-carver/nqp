@@ -404,6 +404,10 @@ public final class Ops {
             VMArrayInstance_i8 arr8 = (VMArrayInstance_i8)buf;
             arr8.set_elems(tc, size);
             arr8.elems = (int)sock.read(tc, arr8.slots);
+            if (arr8.elems == -1) {
+                arr8.elems = 0;
+                arr8.slots = null;
+            }
             arr8.start = 0;
             return (SixModelObject)arr8;
         } else {
