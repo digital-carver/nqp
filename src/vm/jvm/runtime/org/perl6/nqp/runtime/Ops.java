@@ -391,7 +391,8 @@ public final class Ops {
         IOHandleInstance h = (IOHandleInstance)obj;
         NotQuiteSocket sock = (NotQuiteSocket)h.handle;
         NotQuiteSocket newsock = sock.accept(tc);
-        IOHandleInstance ret = new IOHandleInstance();
+        SixModelObject IOType = tc.curFrame.codeRef.staticInfo.compUnit.hllConfig.ioType; 
+        IOHandleInstance ret = (IOHandleInstance)IOType.st.REPR.allocate(tc, IOType.st);
         ret.handle = newsock;
         return (SixModelObject)ret;
     }
