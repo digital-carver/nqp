@@ -7,6 +7,8 @@ my class ParseShared is export {
     has %!marks;
 }
 
+my $FailCursor;
+
 role NQPCursorRole is export {
     has $!shared;
     has int $!from;
@@ -201,9 +203,7 @@ role NQPCursorRole is export {
             $!restart(self);
         }
         else {
-            my $cur := self."!cursor_start_cur"();
-            $cur."!cursor_fail"();
-            $cur
+            $FailCursor;
         }
     }
 
@@ -596,6 +596,8 @@ role NQPCursorRole is export {
     }
 }
 
+my class FailCursor does NQPCursorRole { }
+$FailCursor := FailCursor.new."!cursor_fail"();
 
 class NQPMatch is NQPCapture {
     has $!orig;
