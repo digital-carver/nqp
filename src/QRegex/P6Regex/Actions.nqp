@@ -522,8 +522,13 @@ class QRegex::P6Regex::Actions is HLL::Actions {
                 }
                 elsif $_[0]<backslash> {
                     my $bs := $_[0]<backslash>.ast;
-                    $bs.negate(!$bs.negate) if $<sign> eq '-';
-                    @alts.push($bs);
+                    if $bs.rxtype eq 'enumcharlist' || $bs.rxtype eq 'literal' {
+                        $str := $str ~ $bs[0];
+                    }
+                    else {
+                        $bs.negate(!$bs.negate) if $<sign> eq '-';
+                        @alts.push($bs);
+                    }
                 }
                 else {
                     my $c := ~$_[0];
