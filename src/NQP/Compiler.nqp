@@ -34,6 +34,9 @@ my @clo := $nqpcomp.commandline_options();
 @clo.push('bootstrap');
 $nqpcomp.addstage('classname', :after<start>);
 #?endif
+#?if moar
+@clo.push('bootstrap');
+#?endif
 
 #?if parrot
 # XXX FIX ME
