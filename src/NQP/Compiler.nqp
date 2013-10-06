@@ -42,7 +42,11 @@ $nqpcomp.addstage('classname', :after<start>);
 # XXX FIX ME
 sub MAIN(@ARGS) {
 #?endif
-#?if !parrot
+#?if moar
+# XXX FIX ME
+sub MAIN(@ARGS) {
+#?endif
+#?if jvm
 sub MAIN(*@ARGS) {
 #?endif
     # Enter the compiler.
