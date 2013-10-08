@@ -653,7 +653,7 @@ class NQPMatch is NQPCapture {
     method Num() is parrot_vtable('get_number')  { +self.Str() }
 #?endif
 #?if !parrot
-    method Str() { nqp::substr($!orig, $!from, $!to-$!from) }
+    method Str() { $!to > $!from ?? nqp::substr($!orig, $!from, $!to-$!from) !! '' }
     method Int() { +self.Str() }
     method Num() { +self.Str() }
 #?endif
